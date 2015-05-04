@@ -168,4 +168,31 @@ public class Graphs {
             }
         };
     }
+	public static void PP(Graph g){
+		ArrayList<Integer> ppList = new ArrayList<Integer>();
+		int nbVertices = g.numberVertices();
+		
+		for(int i=0;i<nbVertices;i++){
+			if(!ppList.contains(i)){
+				Iterator<Integer> iterator = g.neighbors(i);
+				int node = -1;
+				if(iterator.hasNext()){
+					while(iterator.hasNext()){
+						node = iterator.next();
+						if(ppList.contains(node)){
+							break;
+						}
+						ppList.add(node);
+						System.out.print(node+" ");
+					}
+					node = iterator.next();
+					if(ppList.contains(node)){
+						break;
+					}
+					ppList.add(node);
+					System.out.print(node+" ");
+				}
+			}
+		}
+	}
 }
