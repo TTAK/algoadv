@@ -3,6 +3,8 @@ package fr.upem.graph;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 
 /**
@@ -168,6 +170,8 @@ public class Graphs {
             }
         };
     }
+    
+    
     public static void parcourtProfondeur(Graph g) {
         ArrayList<Integer> ppList = new ArrayList<Integer>();
         int nbVertices = g.numberVertices();
@@ -192,6 +196,29 @@ public class Graphs {
                     ppList.add(node);
                     System.out.print(node + " ");
                 }
+            }
+        }
+    }
+    
+    /**
+     * Deep first search
+     * @param g a graph
+     * @param operation the operation to apply to each vertice
+     */
+    public static void parcourtLargeur(Graph g, BiConsumer<Integer, Integer> operation) {
+        if(g.numberEdges() <=0){
+            return;
+        }
+        LinkedList<Integer> fifo  = new LinkedList<>();
+        fifo.add(0);
+        
+        while(fifo.size()>0){
+            int actuel = fifo.poll();
+            Iterator<Integer> it = g.neighbors(actuel);
+            while(it.hasNext()){
+                int dest = it.next();
+                operation.accept(actuel, dest);
+                fifo.add(dest);
             }
         }
     }
